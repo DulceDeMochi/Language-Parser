@@ -1,10 +1,12 @@
-file = File.open("samplesong.txt", "r")
+
+puts "Enter file path:"
+
+path = gets
+
+file = File.open("#{path.chomp}", "r")
 
 words = []
 particles = []
-verbs = []
-adjectives = []
-unknown = []
 
 file.each_line do |row|
   # manually pick out punctuation to avoid pulling international characters
@@ -20,6 +22,9 @@ words.each do |word|
   end
 end
 
+words -= particles
+
+# set language based on particles
+puts words
+puts '*' * 20
 puts particles
-#puts words
-#puts words.count
