@@ -25,6 +25,6 @@ end
 words -= particles
 
 # set language based on particles
-puts words
-puts '*' * 20
 puts particles
+puts '*' * 20
+puts words
