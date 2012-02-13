@@ -1,4 +1,3 @@
-# require dependencies
 require 'rubygems'
 require 'watir-webdriver'
 
@@ -16,8 +15,8 @@ file.each_line do |row|
   row = row.gsub(/\.|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\"|\?|\:|\,/, "").downcase.split(" ")
   words += row
 end
-
-words.uniq.each do |word|
+words = words.uniq
+words.each do |word|
   if word.length < 4
     particles << word
   end
