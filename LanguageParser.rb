@@ -29,25 +29,36 @@ browser = Watir::Browser.new :ff
 url = "http://www.spanishdict.com/"
 browser.goto url
 
-# Submit the word to the translation form
-browser.text_field(:id, "translation-textarea").set words[0]
-browser.form(:id, "translate-form").submit
+# Create a hash for defined words
+defined_words = Hash.new
 
-# Loop over spans and pull part of speech and first 2 possible definitions
-parts_of_speech = []
-definitions = []
-definition_count = 0
+word_count = 0
+until word_count == 5
+  # Submit the word to the translation form
+  browser.text_field(:id, "translation-textarea").set words[word_count]
+  browser.form(:id, "translate-form").submit
 
-browser.spans.each do |span|
-  if span.class_name == "part_of_speech"
-    parts_of_speech << span.text
-  elsif span.class_name == "def" && definition_count < 3
-    definitions << span.text
-    definition_count += 1
+  # Loop over spans and pull part of speech and first 2 possible definitions
+  parts_of_speech = []
+  definitions = []
+  definition_count = 0
+  part_of_speech_count = 0 
+
+  browser.spans.each do |span|
+    if span.class_name == "part_of_speech" && part_of_speech_count < 1
+      parts_of_speech << span.text
+      part_of_speech_count += 1
+    elsif span.class_name == "def" && definition_count < 3
+      definitions << span.text
+      definition_count += 1
+    end
   end
+
+  defined_words[words[word_count]] = definitions
+  word_count += 1
 end
 
-puts parts_of_speech
+puts defined_words
 
 #puts particles
 #puts '*' * 20
