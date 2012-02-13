@@ -1,22 +1,23 @@
+# require dependencies
+require 'rubygems'
+require 'watir-webdriver'
 
+# Collect foreign words from a file for later translation
 puts "Enter file path:"
-
 path = gets
-
 file = File.open("#{path.chomp}", "r")
 
+
+# Manually pick out punctuation to avoid pulling international characters
 words = []
 particles = []
 
 file.each_line do |row|
-  # manually pick out punctuation to avoid pulling international characters
   row = row.gsub(/\.|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\"|\?|\:|\,/, "").downcase.split(" ")
   words += row
 end
 
-words = words.uniq
-
-words.each do |word|
+words.uniq.each do |word|
   if word.length < 4
     particles << word
   end
@@ -24,7 +25,3 @@ end
 
 words -= particles
 
-# set language based on particles
-puts particles
-puts '*' * 20
-puts words
