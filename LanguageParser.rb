@@ -56,6 +56,7 @@ until word_count == 5
 
   defined_words[words[word_count]] = definitions
   word_count += 1
+  sleep 30
 end
 
 puts defined_words
