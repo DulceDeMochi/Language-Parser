@@ -10,19 +10,16 @@ file = File.open("samplesong2.txt", "r")
 
 # Manually pick out punctuation to avoid pulling international characters
 words = []
-particles = []
 
 file.each_line do |row|
   row = row.gsub(/\.|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\"|\?|\:|\,/, "").downcase.split(" ")
   words += row
 end
-words = words.uniq
-words.each do |word|
-  if word.length < 4
-    particles << word
-  end
-end
 
+#De-dup the list of words and pull out words that are likely to be particles
+particles = []
+words = words.uniq
+words.each {|word| particles << word if word.length < 4 }
 words -= particles
 
 # Open a browser to SpanishDict to look up definitions
